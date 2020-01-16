@@ -115,13 +115,13 @@ public class JdbcController {
     }
 	
 	@ResponseBody
-	@RequestMapping(value = "/sec/delete", method=RequestMethod.POST)
-    public ResponseEntity<String> deleteTest(@RequestBody Test test) {
-	    HashMap<String, String> map = new HashMap<>();
-	   
+	@RequestMapping(value = "/sec/delete", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String,Object>> deleteTest(@RequestBody Test test) {
+	    HashMap<String, Object> map = new HashMap<>();
+
 		if (secondaryJdbcTemplate.queryForList("SELECT * FROM test where id = ?",test.getId()).isEmpty()) {
-			map.put("RESULT", "Delete Id= "+test.getId()+" is not existed");
-			return  new ResponseEntity<>(map.toString(), HttpStatus.BAD_REQUEST); 
+			map.put("RESULT", "Delete id be "+test.getId().toString()+" is not existed");
+			return new ResponseEntity<Map<String,Object>>(map,HttpStatus.BAD_REQUEST); 
 		}
 		String deleteQuery = "DELETE FROM test WHERE id = ?";
         Object[] params = new Object[] {test.getId()};
@@ -129,10 +129,10 @@ public class JdbcController {
         secondaryJdbcTemplate.update(deleteQuery, params);
         if (secondaryJdbcTemplate.queryForList("SELECT * FROM test where id = ?",test.getId()).isEmpty()) {
         	map.put("RESULT", "success");
-        	return new ResponseEntity<>(map.toString(), HttpStatus.BAD_REQUEST); 
+        	return new ResponseEntity<Map<String,Object>>(map,HttpStatus.OK);
         }else {
         	map.put("RESULT", "delete failed");
-        	return new ResponseEntity<>(map.toString(), HttpStatus.BAD_REQUEST); 
+        	return new ResponseEntity<Map<String,Object>>(map,HttpStatus.INTERNAL_SERVER_ERROR); 
         }
 
     }

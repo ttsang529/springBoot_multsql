@@ -14,8 +14,10 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 @PropertySource({ "classpath:application.properties" })
 @EnableJpaRepositories(
     basePackages = "idv.tommy.jpa.dao.primary", 
@@ -44,10 +46,10 @@ public class JpaPrimaryConfig {
           = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto",
-          env.getProperty("hibernate.hbm2ddl.auto"));
-        properties.put("hibernate.dialect",
-          env.getProperty("hibernate.dialect"));
+        properties.put("hibernate.hbm2ddl.auto","update");
+        properties.put("hibernate.dialect","org.hibernate.dialect.MySQL8Dialect");
+        properties.put("hibernate.naming.physical-strategy","org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy");   
+        properties.put("hibernate.show_sql",true);       
         em.setJpaPropertyMap(properties);
  
         return em;

@@ -8,11 +8,11 @@ public class Test {
 	private String testname;
 	private String testauthor;
 	//For output 
-	public Test(Integer id,String testname,String testauthor) {
-		this.id=id;
-	    this.testname = testname;
-	    this.testauthor=testauthor;
-	}
+//	public Test(Integer id,String testname,String testauthor) {
+//		this.id=id;
+//	    this.testname = testname;
+//	    this.testauthor=testauthor;
+//	}
 	public Integer getId() {
 		return id;
 	}

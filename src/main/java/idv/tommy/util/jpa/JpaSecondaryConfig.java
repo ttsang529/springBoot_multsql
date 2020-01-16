@@ -44,10 +44,10 @@ public class JpaSecondaryConfig {
           = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         HashMap<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto",
-          env.getProperty("hibernate.hbm2ddl.auto"));
-        properties.put("hibernate.dialect",
-          env.getProperty("hibernate.dialect"));
+        properties.put("hibernate.hbm2ddl.auto","update");
+        properties.put("hibernate.dialect","org.hibernate.dialect.MySQL8Dialect");
+        properties.put("hibernate.naming.physical-strategy","org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy");   
+        properties.put("hibernate.show_sql",true);   
         em.setJpaPropertyMap(properties);
  
         return em;
